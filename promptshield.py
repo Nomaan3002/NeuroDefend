@@ -30,17 +30,20 @@ class PromptShield:
             (re.compile(r'\blogin credentials|verify account|confirm password\b', re.IGNORECASE), "Phishing Content"),
 
             # Malware / Exploit Generation
-            (re.compile(r'\b(generate|write)\s+(malware|virus|ransomware|trojan)\b', re.IGNORECASE), "Malware Instruction"),
-            (re.compile(r'\b(code|script)\s+to\s+(disable antivirus|bypass firewall|exploit vulnerability)\b', re.IGNORECASE), "Exploit Instruction"),
+            (re.compile(r'\b(generate|write|create)\s+(malware|virus|ransomware|trojan|worm)\b', re.IGNORECASE), "Malware Instruction"),
+            (re.compile(r'\b(code|script|program)\s+to\s+(disable antivirus|bypass firewall|exploit vulnerability|crack software|hack wifi)\b', re.IGNORECASE), "Exploit Instruction"),
 
-            # Scripting Injection
+            # General Hacking Prompts
+            (re.compile(r'\b(hack|breach|bypass)\s+(a\s+)?(computer|system|account|firewall|server|wifi|network)\b', re.IGNORECASE), "Hacking Attempt"),
+            (re.compile(r'\bhow to (hack|bypass|breach|crack)\b', re.IGNORECASE), "Hacking Intent"),
+            (re.compile(r'\b(bypass firewall|exploit vulnerability|crack password)\b', re.IGNORECASE), "Security Bypass"),
+
+            # Script Injection
             (re.compile(r'<script>.*?</script>', re.IGNORECASE), "Script Injection"),
         ]
 
         self.obfuscation_patterns = [
             (re.compile(r'([!@#$%^&*()_+=👦👦{};:\'",.<>/?\\|`~]){6,}'), "Character Flooding"),
-            # Removed too-aggressive obfuscation rule
-            # Safer alternative: looking for mix of digits + special chars
             (re.compile(r'(?=.[a-zA-Z])(?=.\d)(?=.*[^a-zA-Z\d]).{10,}'), "Complex Obfuscated String")
         ]
 
